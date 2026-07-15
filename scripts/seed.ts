@@ -14,56 +14,56 @@ const CATEGORIES_DATA = [
     name: "Artificial Flowers",
     slug: "artificial-flowers",
     description: "Beautiful artificial flowers for all occasions — roses, marigolds, jasmine, lotus, and more.",
-    image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=800&auto=format&fit=crop",
+    image: "/images/categories/artificial-flowers.jpg",
     displayOrder: 1,
   },
   {
     name: "Garlands",
     slug: "garlands",
     description: "Traditional and decorative garlands for weddings, festivals, and daily pooja.",
-    image: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=800&auto=format&fit=crop",
+    image: "/images/categories/garlands.jpg",
     displayOrder: 2,
   },
   {
     name: "Wedding Decorations",
     slug: "wedding-decorations",
     description: "Complete wedding stage, mandap, and entrance decoration sets.",
-    image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop",
+    image: "/images/categories/wedding-decorations.jpg",
     displayOrder: 3,
   },
   {
     name: "Festival Decorations",
     slug: "festival-decorations",
     description: "Festive decoration items for Diwali, Navratri, Ganesh Chaturthi, and more.",
-    image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=800&auto=format&fit=crop",
+    image: "/images/categories/festival-decorations.jpg",
     displayOrder: 4,
   },
   {
     name: "Door Hangings (Toran)",
     slug: "door-hangings-toran",
     description: "Traditional and modern torans and door hanging decorations.",
-    image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&auto=format&fit=crop",
+    image: "/images/categories/door-hangings-toran.jpg",
     displayOrder: 5,
   },
   {
     name: "Decoration Cloth",
     slug: "decoration-cloth",
     description: "Decorative fabrics, drapes, and cloth for stage and venue decoration.",
-    image: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=800&auto=format&fit=crop",
+    image: "/images/categories/decoration-cloth.jpg",
     displayOrder: 6,
   },
   {
     name: "Pooja Items",
     slug: "pooja-items",
     description: "Essential pooja decoration items, temple accessories, and worship materials.",
-    image: "https://images.unsplash.com/photo-1608976478546-d24930d4a9bf?w=800&auto=format&fit=crop",
+    image: "/images/categories/pooja-items.jpg",
     displayOrder: 7,
   },
   {
     name: "Seasonal Decorations",
     slug: "seasonal-decorations",
     description: "Seasonal and holiday decoration products for every time of the year.",
-    image: "https://images.unsplash.com/photo-1482862549707-f63cb32c5fd9?w=800&auto=format&fit=crop",
+    image: "/images/categories/seasonal-decorations.jpg",
     displayOrder: 8,
   },
 ];
@@ -291,18 +291,15 @@ async function seed() {
       }).returning();
 
       // Insert multiple images for this product (2 images each)
-      const img1Index = i % unsplashList.length;
-      const img2Index = (i + 1) % unsplashList.length;
-      
       const imagesToInsert = [
-        unsplashList[img1Index],
-        unsplashList[img2Index]
+        `/images/products/${productData.slug}-1.jpg`,
+        `/images/products/${productData.slug}-2.jpg`
       ];
 
       for (let j = 0; j < imagesToInsert.length; j++) {
         await db.insert(productImages).values({
           productId: newProd.id,
-          cloudinaryPublicId: `seed_${category.slug}_${i}_${j}`,
+          cloudinaryPublicId: `local_${productData.slug}_${j}`,
           url: imagesToInsert[j],
           altText: `${productData.name} - View ${j + 1}`,
           displayOrder: j,
